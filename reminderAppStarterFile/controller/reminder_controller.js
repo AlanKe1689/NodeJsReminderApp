@@ -45,7 +45,19 @@ let remindersController = {
   },
 
   delete: (req, res) => {
-    // Implement this code
+    let reminderToFind = req.params.id;
+
+    let searchResult = database.cindy.reminders.find(function (reminder) {
+      return reminder.id == reminderToFind;
+    });
+
+    const index = database.cindy.reminders.indexOf(searchResult);
+
+    if (index > -1) {
+      database.cindy.reminders.splice(index, 1);
+    }
+
+    res.redirect("/reminders");
   },
 };
 
