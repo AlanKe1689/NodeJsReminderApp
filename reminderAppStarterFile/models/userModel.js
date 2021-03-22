@@ -34,16 +34,13 @@ const userModel = {
     }
     throw new Error(`Couldn't find user with id: ${id}`);
   },
-  createUser: (profile) => {
+  createUser: (name, email, password) => {
     database.push({
-      id: profile.id,
-      name: profile.username,
+      id: database.length + 1,
+      name: name,
+      email: email,
+      password: password
     });
-    const user = database.find((user) => user.id === profile.id);
-    if (user) {
-      return user;
-    }
-    throw new Error(`Couldn't find user with id: ${profile.id}`);
   }
 };
 

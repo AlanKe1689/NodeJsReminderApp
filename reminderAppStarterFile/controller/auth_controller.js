@@ -1,4 +1,5 @@
 let database = require("../database");
+let userModel = require("../models/userModel").userModel;
 
 let authController = {
   login: (req, res) => {
@@ -10,7 +11,11 @@ let authController = {
   },
 
   registerSubmit: (req, res) => {
-    // implement
+    userModel.createUser(req.body.name, req.body.email, req.body.password);
+
+    database[req.body.name] = {"reminders": []};
+
+    res.redirect("/reminders");
   },
 };
 
