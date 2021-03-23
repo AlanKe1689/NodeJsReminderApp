@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const ejsLayouts = require("express-ejs-layouts");
 const session = require("express-session");
+require('dotenv').config();
 const reminderController = require("./controller/reminder_controller");
 const authController = require("./controller/auth_controller");
 
