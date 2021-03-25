@@ -1,8 +1,14 @@
 let reminderDatabase = require("../database");
+var userName = null;
 
 let remindersController = {
   list: (req, res) => {
-    res.render("reminder/index", { reminders: reminderDatabase.cindy.reminders, picture: reminderDatabase.cindy.picture });
+    if (req.user !== undefined) {
+      userName = req.user.name;
+      res.render("reminder/index", { reminders: reminderDatabase[userName].reminders, picture: reminderDatabase[userName].picture });
+    } else {
+      res.render("auth/login");
+    }
   },
 
   new: (req, res) => {
@@ -11,13 +17,13 @@ let remindersController = {
 
   listOne: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = reminderDatabase.cindy.reminders.find(function (reminder) {
+    let searchResult = reminderDatabase[userName].reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
     if (searchResult != undefined) {
       res.render("reminder/single-reminder", { reminderItem: searchResult });
     } else {
-      res.render("reminder/index", { reminders: reminderDatabase.cindy.reminders });
+      res.render("reminder/index", { reminders: reminderDatabase[userName].reminders });
     }
   },
 
@@ -48,8 +54,9 @@ let remindersController = {
     } else {
       reminderSubTasks = [];
     }
+
     let reminder = {
-      id: reminderDatabase.cindy.reminders.length + 1,
+      id: reminderDatabase[userName].reminders.length + 1,
       title: req.body.title,
       date: reminderData,
       description: req.body.description,
@@ -58,14 +65,14 @@ let remindersController = {
       subtasks: reminderSubTasks
     };
 
-    reminderDatabase.cindy.reminders.push(reminder);
+    reminderDatabase[userName].reminders.push(reminder);
 
     res.redirect("/reminders");
   },
 
   edit: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = reminderDatabase.cindy.reminders.find(function (reminder) {
+    let searchResult = reminderDatabase[userName].reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
     res.render("reminder/edit", { reminderItem: searchResult });
@@ -74,11 +81,11 @@ let remindersController = {
   update: (req, res) => {
     let reminderToFind = req.body.id;
 
-    let searchResult = reminderDatabase.cindy.reminders.find(function (reminder) {
+    let searchResult = reminderDatabase[userName].reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
 
-    const index = reminderDatabase.cindy.reminders.indexOf(searchResult);
+    const index = reminderDatabase[userName].reminders.indexOf(searchResult);
 
     if (index > -1) {
       let reminderDate = req.body.date;
@@ -108,12 +115,12 @@ let remindersController = {
         reminderSubTasks = [];
       }
 
-      reminderDatabase.cindy.reminders[index]['title'] = req.body.title;
-      reminderDatabase.cindy.reminders[index]['description'] = req.body.description;
-      reminderDatabase.cindy.reminders[index]['completed'] = req.body.completed;
-      reminderDatabase.cindy.reminders[index]['date'] = reminderData;
-      reminderDatabase.cindy.reminders[index]['tags'] = reminderTags;
-      reminderDatabase.cindy.reminders[index]['subtasks'] = reminderSubTasks;
+      reminderDatabase[userName].reminders[index]['title'] = req.body.title;
+      reminderDatabase[userName].reminders[index]['description'] = req.body.description;
+      reminderDatabase[userName].reminders[index]['completed'] = req.body.completed;
+      reminderDatabase[userName].reminders[index]['date'] = reminderData;
+      reminderDatabase[userName].reminders[index]['tags'] = reminderTags;
+      reminderDatabase[userName].reminders[index]['subtasks'] = reminderSubTasks;
     }
 
     res.redirect("/reminders");
@@ -122,14 +129,14 @@ let remindersController = {
   delete: (req, res) => {
     let reminderToFind = req.params.id;
 
-    let searchResult = reminderDatabase.cindy.reminders.find(function (reminder) {
+    let searchResult = reminderDatabase[userName].reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
 
-    const index = reminderDatabase.cindy.reminders.indexOf(searchResult);
+    const index = reminderDatabase[userName].reminders.indexOf(searchResult);
 
     if (index > -1) {
-      reminderDatabase.cindy.reminders.splice(index, 1);
+      reminderDatabase[userName].reminders.splice(index, 1);
     }
 
     res.redirect("/reminders");
