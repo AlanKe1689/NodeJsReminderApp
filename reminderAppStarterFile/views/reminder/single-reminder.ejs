@@ -12,6 +12,16 @@
             <span class="label label-danger">False</span>
           <% } %>
         </h4>
+        <h4>Tags:
+          <% reminderItem.tags.forEach(function (reminderTag) { %>
+            <span class="badge badge-primary"><%= reminderTag %></span>
+          <% }) %>
+        </h4>
+        <h4>Date: <%= reminderItem.date %></h4>
+        <h4>Sub-tasks:</h4>
+        <% reminderItem.subtasks.forEach(function (reminderSubTasks) { %>
+          <h5><%= reminderSubTasks %></h5>
+        <% }) %>
 
         <a class="btn btn-warning" href=<%= "/reminder/" + reminderItem.id + "/edit" %>>Edit</a>
 
@@ -21,5 +31,4 @@
 
       </li>
     </ul>
-
 </div>

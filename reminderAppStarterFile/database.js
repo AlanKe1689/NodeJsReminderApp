@@ -1,6 +1,14 @@
-let Database = {
+var Database = {
     cindy: {
-        reminders: [{id: 1, title: "abc", description: "abcabc", completed: false}]
+        reminders: [{
+            id: 1,
+            title: "abc",
+            date: new Date().toLocaleDateString("en-US"),
+            description: "abcabc",
+            completed: false,
+            tags: ["abc"],
+            subtasks: ["abcabcabc"]
+        }]
     },
     alex: {
         reminders: []

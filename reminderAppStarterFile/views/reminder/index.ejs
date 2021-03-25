@@ -1,20 +1,33 @@
 <div class="container">
   <h1 class="page-header">Reminders</h1>
   <img src=<%= picture %> alt="profile picture">
-<ul class="list-group">
-  <% reminders.forEach(function (reminderItem) { %>
-    <li class="list-group-item">
-      <strong><%= reminderItem.title %>: </strong>
-      <%= reminderItem.description %>
-      || Completed:
-      <% if (reminderItem.completed == true) { %>
-        <span class="badge badge-success">True</span>
-      <% } else if (reminderItem.completed == false) { %>
-        <span class="badge badge-danger">False</span>
-      <% } %>
-      <a class="pull-right" href=<%= "/reminder/" + reminderItem.id %>>View</a>
-    </li>
-  <% }) %>
-</ul>
-
+  <ul class="list-group">
+    <% reminders.forEach(function (reminderItem) { %>
+      <li class="list-group-item">
+        <strong><%= reminderItem.title %>: </strong>
+        <%= reminderItem.description %>
+        <br />
+        <strong>Completed:</strong>
+        <% if (reminderItem.completed == true) { %>
+          <span class="badge badge-success">True</span>
+        <% } else if (reminderItem.completed == false) { %>
+          <span class="badge badge-danger">False</span>
+        <% } %>
+        <br />
+        <strong>Tags:</strong>
+        <% reminderItem.tags.forEach(function (reminderTag) { %>
+          <span class="badge badge-primary"><%= reminderTag %></span>
+        <% }) %>
+        <br />
+        <strong>Date:</strong>
+        <span><%= reminderItem.date %></span>
+        <br />
+        <strong>Sub-tasks:</strong>
+        <% reminderItem.subtasks.forEach(function (reminderSubTasks) { %>
+          <p><%= reminderSubTasks %></p>
+        <% }) %>
+        <a class="pull-right" href=<%= "/reminder/" + reminderItem.id %>>View</a>
+      </li>
+    <% }) %>
+  </ul>
 </div>
