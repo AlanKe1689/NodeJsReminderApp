@@ -20,7 +20,7 @@ let authController = {
       .then(photos => photos.json())
       .then(parsedPhotos => {
         let pictureLength = Object.keys(parsedPhotos).length;
-        let index = Math.floor(Math.random() * (Math.floor(pictureLength - 1) - Math.floor(0)));
+        let index = Math.floor(Math.random() * (pictureLength - 1));
         picture = parsedPhotos.results[index].urls.thumb;
 
         userModel.createUser(req.body.name, req.body.email, req.body.password);

@@ -104,17 +104,25 @@ let remindersController = {
     const index = reminderDatabase[userName].reminders.indexOf(searchResult);
 
     if (index > -1) {
+      let reminderCompleted = req.body.completed;
+
+      if (reminderCompleted === "true") {
+        reminderCompleted = true;
+      } else {
+        reminderCompleted = false;
+      }
+
       let reminderDate = req.body.date;
-      if (reminderDate !== undefined) {
+      if (reminderDate !== undefined && reminderDate !== "") {
         let dateArray = reminderDate.split("/");
 
         if (dateArray[2].length < 4) {
           dateArray[2] = "20" + dateArray[2];
         }
 
-        reminderData = new Date(parseInt(dateArray[2], 10), parseInt(dateArray[0], 10) - 1, parseInt(dateArray[1], 10)).toLocaleDateString("en-US");
+        reminderDate = new Date(parseInt(dateArray[2], 10), parseInt(dateArray[0], 10) - 1, parseInt(dateArray[1], 10)).toLocaleDateString("en-US");
       } else {
-        reminderData = new Date().toLocaleDateString("en-US");
+        reminderDate = "";
       }
 
       let reminderTags = req.body.tags;
@@ -133,8 +141,8 @@ let remindersController = {
 
       reminderDatabase[userName].reminders[index]['title'] = req.body.title;
       reminderDatabase[userName].reminders[index]['description'] = req.body.description;
-      reminderDatabase[userName].reminders[index]['completed'] = req.body.completed;
-      reminderDatabase[userName].reminders[index]['date'] = reminderData;
+      reminderDatabase[userName].reminders[index]['completed'] = reminderCompleted;
+      reminderDatabase[userName].reminders[index]['date'] = reminderDate;
       reminderDatabase[userName].reminders[index]['tags'] = reminderTags;
       reminderDatabase[userName].reminders[index]['subtasks'] = reminderSubTasks;
     }
@@ -163,7 +171,7 @@ let remindersController = {
     let searchTerm = req.body.search;
 
     userDatabase.forEach(function (user) {
-      if (user.name === searchTerm && user.name !== userName) {
+      if (user.name === searchTerm && user.name !== userName && !reminderDatabase[userName].friends.includes(user.name)) {
         searchResults.push(user);
       }
     });

@@ -77,11 +77,11 @@
       <p><%= friend %></p>
     <% }) %>
   </div>
-  <div class="input-group-append">
-    <form method="POST" action=<%= "/reminder/search" %>>
+  <form method="POST" action=<%= "/reminder/search" %>>
+    <div class="form-group">
       <label for="search">Friend Search</label>
       <input type="text" name="search" class="form-control" id="search" placeholder="Enter name">
-      <button type="submit" class="btn btn-default">Search</button>
-    </form>
-  </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
 </div>

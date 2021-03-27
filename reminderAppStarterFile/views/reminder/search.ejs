@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 class="page-header">Search Results</h1>
+  <ul class="list-group">
+    <% searchResults.forEach(function (userData) { %>
+      <li class="list-group-item">
+        <form method="POST" action=<%= "/reminder/add" %>>
+          <div class="form-group">
+            <input type="text" name="added" class="form-control" id="added" value=<%= userData.name %> readonly>
+          </div>
+          <button type="submit" class="btn btn-primary">Add to Friends</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+  <a class="pull-right" href="/reminders">Back</a>
+</div>
