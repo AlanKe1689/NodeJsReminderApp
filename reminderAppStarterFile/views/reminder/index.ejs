@@ -38,13 +38,44 @@
       <% }) %>
     </ul>
   </div>
+  <% if (friendsReminders.length > 0) { %>
+    <h1 class="page-header">Friends Reminders</h1>
+    <div>
+      <ul class="list-group">
+        <% friendsReminders.forEach(function (reminderItem) { %>
+          <li class="list-group-item">
+            <strong><%= reminderItem.title %>: </strong>
+            <%= reminderItem.description %>
+            <br />
+            <strong>Completed:</strong>
+            <% if (reminderItem.completed == true) { %>
+              <span class="badge badge-success">True</span>
+            <% } else if (reminderItem.completed == false) { %>
+              <span class="badge badge-danger">False</span>
+            <% } %>
+            <br />
+            <strong>Tags:</strong>
+            <% reminderItem.tags.forEach(function (reminderTag) { %>
+              <span class="badge badge-primary"><%= reminderTag %></span>
+            <% }) %>
+            <br />
+            <strong>Date:</strong>
+            <span><%= reminderItem.date %></span>
+            <br />
+            <strong>Sub-tasks:</strong>
+            <% reminderItem.subtasks.forEach(function (reminderSubTasks) { %>
+              <p><%= reminderSubTasks %></p>
+            <% }) %>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
   <div>
-    <% if (friends !== []) { %>
-      <h3>Friend List</h3>
-      <% friends.forEach(function (friend) { %>
-        <p><%= friend %></p>
-      <% }) %>
-    <% } %>
+    <h3>Friend List</h3>
+    <% friends.forEach(function (friend) { %>
+      <p><%= friend %></p>
+    <% }) %>
   </div>
   <div class="input-group-append">
     <form method="POST" action=<%= "/reminder/search" %>>

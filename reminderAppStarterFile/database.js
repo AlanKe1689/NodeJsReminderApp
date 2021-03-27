@@ -13,9 +13,17 @@ var Database = {
         picture: undefined
     },
     alex: {
-        reminders: [],
+        reminders: [{
+            id: 1,
+            title: "abc123",
+            date: new Date().toLocaleDateString("en-US"),
+            description: "abcabc123",
+            completed: true,
+            tags: ["abc123"],
+            subtasks: ["abcabcabc123"],
+        }],
         friends: [],
-        picture: []
+        picture: undefined
     } 
 }
 

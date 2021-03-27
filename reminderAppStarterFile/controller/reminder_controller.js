@@ -1,18 +1,25 @@
 var reminderDatabase = require("../database");
 var userDatabase = require("../models/userModel").database;
 var userName = null;
-var userId = null;
 
 let remindersController = {
   list: (req, res) => {
     if (req.user !== undefined) {
-      userId = req.user.id;
       userName = req.user.name;
+
+      let friendsReminders = [];
+
+      reminderDatabase[userName].friends.forEach(function (friend) {
+        reminderDatabase[friend].reminders.forEach(function (reminder) {
+          friendsReminders.push(reminder);
+        });
+      })
+
       res.render("reminder/index", {
         reminders: reminderDatabase[userName].reminders,
         picture: reminderDatabase[userName].picture,
         friends: reminderDatabase[userName].friends,
-        user: userId,
+        friendsReminders: friendsReminders,
         name: userName
       });
     } else {
@@ -156,12 +163,12 @@ let remindersController = {
     let searchTerm = req.body.search;
 
     userDatabase.forEach(function (user) {
-      if (user.name.includes(searchTerm) && user.id !== userId) {
+      if (user.name === searchTerm && user.name !== userName) {
         searchResults.push(user);
       }
     });
 
-    res.render("reminder/search", { searchResults: searchResults, user: userId });
+    res.render("reminder/search", { searchResults: searchResults });
   },
 
   addFriends: (req, res) => {
