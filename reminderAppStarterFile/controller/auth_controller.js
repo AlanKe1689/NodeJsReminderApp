@@ -25,7 +25,7 @@ let authController = {
 
         userModel.createUser(req.body.name, req.body.email, req.body.password);
 
-        database[req.body.name] = {"reminders": [], "picture": picture};
+        database[req.body.name] = {"reminders": [], "friends": [], "picture": picture};
       });
 
     res.redirect("/reminders");

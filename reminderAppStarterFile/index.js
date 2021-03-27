@@ -49,6 +49,10 @@ app.post("/reminder/update/:id", reminderController.update);
 
 app.post("/reminder/delete/:id", reminderController.delete);
 
+app.post("/reminder/search", reminderController.searchFriends);
+
+app.post("/reminder/add", reminderController.addFriends);
+
 app.get("/register", authController.register);
 app.get("/login", authController.login);
 app.post("/register", authController.registerSubmit);

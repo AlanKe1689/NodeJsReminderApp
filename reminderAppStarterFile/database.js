@@ -7,11 +7,15 @@ var Database = {
             description: "abcabc",
             completed: false,
             tags: ["abc"],
-            subtasks: ["abcabcabc"]
-        }]
+            subtasks: ["abcabcabc"],
+        }],
+        friends: [],
+        picture: undefined
     },
     alex: {
-        reminders: []
+        reminders: [],
+        friends: [],
+        picture: []
     } 
 }
 
